@@ -73,7 +73,7 @@
 </div>
 
 <script>
-    fetch('./names1.csv')  // Replace 'your-data.csv' with the actual path to your CSV file
+    fetch('./final.csv')  // Replace 'your-data.csv' with the actual path to your CSV file
         .then(response => response.text())
         .then(data => {
             const rows = data.split('\n');
@@ -83,11 +83,31 @@
                 const cells = row.split(',');
                 const newRow = document.createElement('tr');
 
-                cells.forEach(cell => {
+                // cells.forEach(cell => {
+                //     const newCell = document.createElement('td');
+                //     newCell.textContent = cell.trim(); // Remove whitespace
+                //     newRow.appendChild(newCell);
+                // });
+
+
+
+                cells.forEach((cell, index) => {
                     const newCell = document.createElement('td');
-                    newCell.textContent = cell.trim(); // Remove whitespace
+                    if (index === 3) { // Index 3 corresponds to the "Portfolio Website" column
+                        const link = document.createElement('a');
+                        link.href = cell.trim(); // Assuming the CSV cell contains the URL
+                        link.textContent = "Get Link"; // Display "Portfolio" as the link text
+                        link.target = "_blank"; // Open the link in a new tab
+                        newCell.appendChild(link);
+                    } else {
+                        newCell.textContent = cell.trim();
+                    }
                     newRow.appendChild(newCell);
                 });
+
+
+
+
 
                 tableBody.appendChild(newRow);
             });
